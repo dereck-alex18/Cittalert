@@ -1,11 +1,13 @@
 import os
 from cli.authentication import UserManager
+from cli.user_menu import UserMenu
 
 
 class CLIMenu:
 
     def __init__(self):
         self.user_manager = UserManager()
+        self.user_menu = UserMenu()
 
     def welcome_message(self):
         os.system("clear")
@@ -38,6 +40,7 @@ class CLIMenu:
                 os.system("clear")
                 print("Login successful!")
                 print("Welcome back, " + loggedInUser["username"])
+                self.user_menu.user_menu(loggedInUser)
            else:
                 os.system("clear")
                 print("Login failed. Incorrect username or password!")
