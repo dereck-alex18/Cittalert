@@ -1,5 +1,34 @@
 {
   "users": [
-   
+    {
+      "username": "dereck",
+      "password": "123",
+      "alerts": [
+        {}
+      ],
+      "complaints": [
+        {}
+      ]
+    },
+    {
+      "username": "egito",
+      "password": "123",
+      "alerts": [
+        {}
+      ],
+      "complaints": [
+        {}
+      ]
+    },
+    {
+      "username": "port",
+      "password": "123",
+      "alerts": [
+        {}
+      ],
+      "complaints": [
+        {}
+      ]
+    }
   ]
 }

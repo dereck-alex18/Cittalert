@@ -1,13 +1,10 @@
 import os
 from cli.authentication import UserManager
-from cli.user_menu import UserMenu
-
 
 class CLIMenu:
 
     def __init__(self):
         self.user_manager = UserManager()
-        self.user_menu = UserMenu()
 
     def welcome_message(self):
         os.system("clear")
@@ -23,8 +20,12 @@ class CLIMenu:
     def initial_menu(self):
         print('[1] Login\n[2] Sign up\n[0] Exit')
         
-        option = int(input())
-        self.choose_login_signup(option)
+        try:
+            option = int(input())
+            self.choose_login_signup(option)
+        except ValueError:
+            print("Invalid option. Please try again.")
+            self.initial_menu()
         
 
     def choose_login_signup(self, option):
@@ -37,6 +38,8 @@ class CLIMenu:
            loggedInUser = self.user_manager.login_user(username, password)
 
            if loggedInUser:
+                from cli.user_menu import UserMenu
+                self.user_menu = UserMenu()
                 os.system("clear")
                 print("Login successful!")
                 print("Welcome back, " + loggedInUser["username"])
