@@ -17,14 +17,19 @@ class UserManager:
                 return self.logged_in_user
         return False
     
+    def get_user(self, username):
+        for user in self.data["users"]:
+            if user["username"] == username:
+                self.logged_in_user = user
+                return self.logged_in_user
+        return False
+    
     def save_user_data(self, username, password):
         new_user = {"username": username, "password": password, "alerts": [{}], "complaints": [{}]}
 
         for data in self.data["users"]:
             if data["username"] == username:
                 return False
-
-        print(self.data["users"][1])
         self.data["users"].append(new_user)
         with open('data/users.json', 'w') as file:
             json.dump(self.data, file, indent=2)
@@ -39,20 +44,28 @@ class UserManager:
             if user["username"] == loggedin_user["username"]:
                 user["username"] =  new_username
                 with open('data/users.json', 'w') as file:
-                    json.dump(self.data, file, indent=2)    
-                return True
+                    json.dump(self.data, file, indent=2)
+                user = self.get_user(new_username)    
+                return user
     
-    #adapt this method to change the password
-    def update_user_password(self, loggedin_user, new_username):
-        for user in self.data["users"]:
-            if user["username"] == new_username:
-                return False
+    def update_user_password(self, loggedin_user, new_password):
         for user in self.data["users"]:
             if user["username"] == loggedin_user["username"]:
-                user["username"] =  new_username
+                user["password"] =  new_password
                 with open('data/users.json', 'w') as file:
                     json.dump(self.data, file, indent=2)    
                 return True
+    
+    def remove_user(self, loggedin_user, password):
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                if(user["password"] != password):
+                    return False
+                self.data["users"].remove(user)
+                with open('data/users.json', 'w') as file:
+                    json.dump(self.data, file, indent=2)
+                return True
+        return False
  
  
     

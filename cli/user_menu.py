@@ -17,7 +17,7 @@ class UserMenu():
               [7] Logout
               ''')
         
-        option = int(input('Choose one of the options above'))
+        option = int(input('Choose one of the options above\n'))
         self.user_options(option, loggedin_user)
 
     def user_options(self, option, loggedin_user):
@@ -37,10 +37,12 @@ class UserMenu():
                 self.account_settings = UserAccount()
                 self.account_settings.change_user_account(option, loggedin_user)
             case 7:
-                from cli.menu import CLIMenu
-                self.initial_menu = CLIMenu()
-                loggedInUser = None
-                self.initial_menu.welcome_message()
-                self.initial_menu.initial_menu()
-                
+                self.logout()
+    
+    def logout(self):
+        from cli.menu import CLIMenu
+        self.initial_menu = CLIMenu()
+        loggedInUser = None
+        self.initial_menu.welcome_message()
+        self.initial_menu.initial_menu()
                 

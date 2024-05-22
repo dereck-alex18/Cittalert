@@ -1,4 +1,5 @@
 import os
+import sys
 from cli.authentication import UserManager
 
 class CLIMenu:
@@ -68,6 +69,7 @@ class CLIMenu:
         
         elif option == 0:
             self.bye_message()
+            sys.exit(0)
             
         else:
             print("Invalid option")
