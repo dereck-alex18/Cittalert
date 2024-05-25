@@ -24,6 +24,12 @@ class UserManager:
                 return self.logged_in_user
         return False
     
+    def get_all_usernames(self):
+        usernames = []
+        for user in self.data["users"]:
+            usernames.append(user["username"])
+        return sorted(usernames)
+    
     def save_user_data(self, username, password):
         new_user = {"username": username, "password": password, "alerts": [{}], "complaints": [{}]}
 

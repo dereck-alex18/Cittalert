@@ -1,4 +1,3 @@
-import os
 from cli.authentication import UserManager
 
 class UserMenu():
@@ -42,7 +41,6 @@ class UserMenu():
     def logout(self):
         from cli.menu import CLIMenu
         self.initial_menu = CLIMenu()
-        loggedInUser = None
         self.initial_menu.welcome_message()
         self.initial_menu.initial_menu()
                 
