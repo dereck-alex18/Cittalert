@@ -1,4 +1,5 @@
 from cli.authentication import UserManager
+import os
 
 class UserMenu():
 
@@ -16,15 +17,26 @@ class UserMenu():
               [7] Logout
               ''')
         
+        
         option = int(input('Choose one of the options above\n'))
         self.user_options(option, loggedin_user)
+        
 
     def user_options(self, option, loggedin_user):
         match option:
             case 1:
                 print("Visualize all Alerts")
             case 2:
-                print("Create Alerts")
+                print(loggedin_user["username"])
+                alert = input("Please, type the alert you want to report\n")
+                created_alert = self.user_manager.create_alert(loggedin_user, alert)
+
+                if created_alert:
+                    os.system("clear")
+                    print("Alert successfully created")
+                else:
+                    print("Something went wrong")
+                self.user_menu(loggedin_user)
             case 3:
                 print("Update Alerts")
             case 4:

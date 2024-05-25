@@ -34,6 +34,7 @@ class UserAccount:
                    print("The username is already taken, please choose another one")
                    self.change_user_account(option, loggedin_user)
                 else:
+                   os.system("clear")
                    print("Username successfully changed")
                    loggedin_user = user
             case 3:
@@ -43,6 +44,7 @@ class UserAccount:
                    print("The password is already taken, please choose another one")
                    self.change_user_account(option, loggedin_user)
                 else:
+                   os.system("clear")
                    print("Password successfully changed")
             case 4:
                 user_password = input("Please enter your password to delete your account\n");

@@ -10,6 +10,18 @@ class UserManager:
             user_data = json.load(file)
         return user_data
     
+    def manage_id(self, user):
+        alert_ids = list(user["alerts"][0].keys())
+
+        if(len(alert_ids) == 0):
+            self.id = 1
+            return self.id
+        
+        last_id = int(alert_ids[-1])
+        self.id = last_id + 1
+
+        return self.id
+    
     def login_user(self, username, password):
         for user in self.data["users"]:
             if user["username"] == username and user["password"] == password:
@@ -18,6 +30,7 @@ class UserManager:
         return False
     
     def get_user(self, username):
+        self.data = self.load_all_user_data()
         for user in self.data["users"]:
             if user["username"] == username:
                 self.logged_in_user = user
@@ -43,6 +56,7 @@ class UserManager:
         return True
     
     def update_user_username(self, loggedin_user, new_username):
+     
         for user in self.data["users"]:
             if user["username"] == new_username:
                 return False
@@ -51,7 +65,8 @@ class UserManager:
                 user["username"] =  new_username
                 with open('data/users.json', 'w') as file:
                     json.dump(self.data, file, indent=2)
-                user = self.get_user(new_username)    
+                user = self.get_user(new_username)
+                
                 return user
     
     def update_user_password(self, loggedin_user, new_password):
@@ -59,7 +74,8 @@ class UserManager:
             if user["username"] == loggedin_user["username"]:
                 user["password"] =  new_password
                 with open('data/users.json', 'w') as file:
-                    json.dump(self.data, file, indent=2)    
+                    json.dump(self.data, file, indent=2)
+             
                 return True
     
     def remove_user(self, loggedin_user, password):
@@ -72,6 +88,15 @@ class UserManager:
                     json.dump(self.data, file, indent=2)
                 return True
         return False
- 
- 
+    
+    def create_alert(self, loggedin_user, alert):
+        self.data = self.load_all_user_data()
+       
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                self.id = self.manage_id(user)       
+                user["alerts"][0][self.id] = alert
+                with open('data/users.json', 'w') as file:
+                    json.dump(self.data, file, indent=2)
+                return True
     
