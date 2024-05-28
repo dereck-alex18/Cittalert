@@ -1,3 +1,35 @@
 {
-  "users": []
+  "users": [
+    {
+      "username": "dereck",
+      "password": "123",
+      "alerts": [
+        {
+          "2": "new alert 2",
+          "4": "alert 4",
+          "5": "alert 5",
+          "6": "guilherme travis",
+          "7": "Assalto na domingos ferreira. Trava em perigo..."
+        }
+      ],
+      "complaints": [
+        {}
+      ]
+    },
+    {
+      "username": "port",
+      "password": "123",
+      "alerts": [
+        {
+          "1": "alert 1",
+          "2": "alert 2",
+          "3": "alert 3",
+          "4": "alert balbla"
+        }
+      ],
+      "complaints": [
+        {}
+      ]
+    }
+  ]
 }

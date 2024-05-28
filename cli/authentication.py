@@ -100,3 +100,20 @@ class UserManager:
                     json.dump(self.data, file, indent=2)
                 return True
     
+    def list_alerts(self, loggedin_user):
+        self.data = self.load_all_user_data()
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                keys = list(user["alerts"][0].keys())
+                values = list(user["alerts"][0].values())
+                
+                if(len(keys) == 0):
+                    print("You don't have any alerts yet")
+                    return False
+                
+                print("List of Alerts:")
+                for i in range(len(keys)):
+                    print(f"{keys[i]}: {values[i]}")
+                return True
+        return False
+    

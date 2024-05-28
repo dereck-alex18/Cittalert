@@ -25,7 +25,9 @@ class UserMenu():
     def user_options(self, option, loggedin_user):
         match option:
             case 1:
-                print("Visualize all Alerts")
+                os.system("clear")
+                self.user_manager.list_alerts(loggedin_user)
+                self.user_menu(loggedin_user)
             case 2:
                 print(loggedin_user["username"])
                 alert = input("Please, type the alert you want to report\n")
