@@ -29,7 +29,7 @@ class UserMenu():
                 self.user_manager.list_alerts(loggedin_user)
                 self.user_menu(loggedin_user)
             case 2:
-                print(loggedin_user["username"])
+                
                 alert = input("Please, type the alert you want to report\n")
                 created_alert = self.user_manager.create_alert(loggedin_user, alert)
 
@@ -40,9 +40,39 @@ class UserMenu():
                     print("Something went wrong")
                 self.user_menu(loggedin_user)
             case 3:
-                print("Update Alerts")
+                list_alerts = self.user_manager.list_alerts(loggedin_user)
+
+                if list_alerts:
+                    alert_id = input("Please, type the id of the alert you want to update\n")
+                    new_alert = input("Please, type the new alert\n")
+                    updated_alert = self.user_manager.update_alert(loggedin_user, alert_id, new_alert)
+
+                    if updated_alert:
+                        os.system("clear")
+                        print("Alert successfully updated")
+                    else:
+                        os.system("clear")
+                        print("Something went wrong, please try again")
+                
+                else:
+                    print("No alerts to update")
+
+               
+
+                self.user_menu(loggedin_user)
+            
             case 4:
-                print("Delete Alerts")
+                list_alerts = self.user_manager.list_alerts(loggedin_user)
+
+                if list_alerts:
+                    alert_id = input("Please, type the alert you want to delete\n")
+                    deleted_alert = self.user_manager.delete_alert(loggedin_user, alert_id)
+                
+                    if deleted_alert:
+                        os.system("clear")
+                        print("Alert successfully deleted")
+
+                self.user_menu(loggedin_user)
             case 5:
                 print("Ombudsman")
             case 6:

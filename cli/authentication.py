@@ -117,3 +117,25 @@ class UserManager:
                 return True
         return False
     
+    def update_alert(self, loggedin_user, alert_id, alert):
+        self.data = self.load_all_user_data()
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                if alert_id in user["alerts"][0]:
+                    user["alerts"][0][alert_id] = alert
+                    with open('data/users.json', 'w') as file:
+                        json.dump(self.data, file, indent=2)
+                    return True
+        return False
+    
+    def delete_alert(self, loggedin_user, alert_id):
+        self.data = self.load_all_user_data()
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                if alert_id in user["alerts"][0]:
+                    del user["alerts"][0][alert_id]
+                    with open('data/users.json', 'w') as file:
+                        json.dump(self.data, file, indent=2)
+                    return True
+        return False
+    
