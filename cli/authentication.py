@@ -10,8 +10,8 @@ class UserManager:
             user_data = json.load(file)
         return user_data
     
-    def manage_id(self, user):
-        alert_ids = list(user["alerts"][0].keys())
+    def manage_id(self, user, option):
+        alert_ids = list(user[option][0].keys())
 
         if(len(alert_ids) == 0):
             self.id = 1
@@ -94,7 +94,7 @@ class UserManager:
        
         for user in self.data["users"]:
             if user["username"] == loggedin_user["username"]:
-                self.id = self.manage_id(user)       
+                self.id = self.manage_id(user, "alerts")       
                 user["alerts"][0][self.id] = alert
                 with open('data/users.json', 'w') as file:
                     json.dump(self.data, file, indent=2)
@@ -134,6 +134,52 @@ class UserManager:
             if user["username"] == loggedin_user["username"]:
                 if alert_id in user["alerts"][0]:
                     del user["alerts"][0][alert_id]
+                    with open('data/users.json', 'w') as file:
+                        json.dump(self.data, file, indent=2)
+                    return True
+        return False
+    
+    def create_ouvidoria(self, loggedin_user, reclamacao):
+        self.data = self.load_all_user_data()
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                self.id = self.manage_id(user, "complaints")     
+                user["complaints"][0][self.id] = reclamacao
+                with open('data/users.json', 'w') as file:
+                    json.dump(self.data, file, indent=2)
+                return True
+    def list_ouvidoria(self, loggedin_user):
+        self.data = self.load_all_user_data()
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                keys = list(user["complaints"][0].keys())
+                values = list(user["complaints"][0].values())
+                
+                if(len(keys) == 0):
+                    print("You don't have any complaints yet")
+                    return False
+                
+                print("List of Complaints:")
+                for i in range(len(keys)):
+                    print(f"{keys[i]}: {values[i]}")
+                return True
+        return False
+    def update_ouvidoria(self, loggedin_user, reclamacao_id, reclamacao):
+        self.data = self.load_all_user_data()
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                if reclamacao_id in user["complaints"][0]:
+                    user["complaints"][0][reclamacao_id] = reclamacao
+                    with open('data/users.json', 'w') as file:
+                        json.dump(self.data, file, indent=2)
+                    return True
+        return False
+    def delete_ouvidoria(self, loggedin_user, reclamacao_id):
+        self.data = self.load_all_user_data()
+        for user in self.data["users"]:
+            if user["username"] == loggedin_user["username"]:
+                if reclamacao_id in user["complaints"][0]:
+                    del user["complaints"][0][reclamacao_id]
                     with open('data/users.json', 'w') as file:
                         json.dump(self.data, file, indent=2)
                     return True

@@ -74,7 +74,9 @@ class UserMenu():
 
                 self.user_menu(loggedin_user)
             case 5:
-                print("Ombudsman")
+                from cli.ouvidoria import OuvidoriaMenu
+                self.ouvidoria = OuvidoriaMenu()
+                self.ouvidoria.ouvidoria_options(loggedin_user)
             case 6:
                 from cli.account_settings import UserAccount
                 self.account_settings = UserAccount()
