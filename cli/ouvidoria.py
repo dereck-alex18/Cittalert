@@ -1,4 +1,4 @@
-import os
+from utils.clear_screen import clear_screen
 from cli.authentication import UserManager
 
 class OuvidoriaMenu:
@@ -24,25 +24,32 @@ class OuvidoriaMenu:
               case 1: 
                    reclamacao = input("Type your complaint\n")
                    created_reclamacao = self.user_manager.create_ouvidoria(logged_in_user, reclamacao)
+                   
+                   clear_screen("Creating new Complaint...")
+
                    if created_reclamacao:
                         print("Complaint successfully sent!")
                    else:
                         print("Something went wrong")
+                    
+                   self.ouvidoria_options(logged_in_user)
                   
               case 2:
                    self.update_ouvidoria(logged_in_user)
+                   self.ouvidoria_options(logged_in_user)
               case 3:
                    self.visualizar_reclamacoes(logged_in_user)
+                   self.ouvidoria_options(logged_in_user)
               case 4:
                    self.deletar_reclamacao(logged_in_user)
+                   self.ouvidoria_options(logged_in_user)
               case 0:
-                   self.salvar_reclamacoes()
-                   from cli.authentication import UserMenu
-                   user_menu = UserMenu()
-                   user_menu.user_menu(logged_in_user)
-         self.user_menu.user_menu(logged_in_user)
+                   clear_screen("Coming back to user menu...")
+                   self.user_menu.user_menu(logged_in_user)
+       
 
     def visualizar_reclamacoes(self, logged_in_user):
+         clear_screen("Loading all complaints...")
          self.user_manager.list_ouvidoria(logged_in_user)
            
               
@@ -53,7 +60,7 @@ class OuvidoriaMenu:
                reclamacao_id = input("Please, type the complaint id you want to delete\n")
                deleted_reclamacao = self.user_manager.delete_ouvidoria(loggedin_user, reclamacao_id)      
                if deleted_reclamacao:
-                    os.system("clear")
+                    clear_screen("Deleting complaint...")
                     print("Complaint successfully deleted")
 
     def update_ouvidoria(self, loggedin_user):
@@ -64,11 +71,12 @@ class OuvidoriaMenu:
           new_complaint = input("Please, type the new complaint\n")
           updated_complaint = self.user_manager.update_ouvidoria(loggedin_user, reclamacao_id, new_complaint)
 
+          clear_screen("Updating complaint...")
+
           if updated_complaint:
-               os.system("clear")
+               
                print("Complaint successfully updated")
           else:
-               os.system("clear")
                print("Something went wrong, please try again")
                 
      else:

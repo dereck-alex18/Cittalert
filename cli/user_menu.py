@@ -1,5 +1,5 @@
 from cli.authentication import UserManager
-import os
+from utils.clear_screen import clear_screen
 
 class UserMenu():
 
@@ -25,7 +25,7 @@ class UserMenu():
     def user_options(self, option, loggedin_user):
         match option:
             case 1:
-                os.system("clear")
+                clear_screen("Loading alerts...")
                 self.user_manager.list_alerts(loggedin_user)
                 self.user_menu(loggedin_user)
             case 2:
@@ -33,8 +33,8 @@ class UserMenu():
                 alert = input("Please, type the alert you want to report\n")
                 created_alert = self.user_manager.create_alert(loggedin_user, alert)
 
+                clear_screen("Creating alert...")
                 if created_alert:
-                    os.system("clear")
                     print("Alert successfully created")
                 else:
                     print("Something went wrong")
@@ -47,11 +47,10 @@ class UserMenu():
                     new_alert = input("Please, type the new alert\n")
                     updated_alert = self.user_manager.update_alert(loggedin_user, alert_id, new_alert)
 
+                    clear_screen("Updating alert...")
                     if updated_alert:
-                        os.system("clear")
                         print("Alert successfully updated")
                     else:
-                        os.system("clear")
                         print("Something went wrong, please try again")
                 
                 else:
@@ -67,21 +66,24 @@ class UserMenu():
                 if list_alerts:
                     alert_id = input("Please, type the alert you want to delete\n")
                     deleted_alert = self.user_manager.delete_alert(loggedin_user, alert_id)
-                
-                    if deleted_alert:
-                        os.system("clear")
+
+                    clear_screen("Deleting alert...")
+                    if deleted_alert:  
                         print("Alert successfully deleted")
 
                 self.user_menu(loggedin_user)
             case 5:
                 from cli.ouvidoria import OuvidoriaMenu
+                clear_screen("Loading ombudsman menu...")
                 self.ouvidoria = OuvidoriaMenu()
                 self.ouvidoria.ouvidoria_options(loggedin_user)
             case 6:
+                clear_screen("Loading account settings menu...")
                 from cli.account_settings import UserAccount
                 self.account_settings = UserAccount()
                 self.account_settings.change_user_account(option, loggedin_user)
             case 7:
+                clear_screen("Loggin out...")
                 self.logout()
     
     def logout(self):

@@ -1,6 +1,7 @@
 import os
 import sys
 from cli.authentication import UserManager
+from utils.clear_screen import clear_screen
 
 class CLIMenu:
 
@@ -8,7 +9,7 @@ class CLIMenu:
         self.user_manager = UserManager()
 
     def welcome_message(self):
-        os.system("clear")
+        clear_screen("Loading login screen...")
         print('*' * 20)
         print("Welcome to Cittalert! Please, choose an option to continue")
         print('*' * 20)
@@ -38,15 +39,17 @@ class CLIMenu:
 
            loggedInUser = self.user_manager.login_user(username, password)
 
+           clear_screen("Verifing user credencials...")
+
            if loggedInUser:
                 from cli.user_menu import UserMenu
                 self.user_menu = UserMenu()
-                os.system("clear")
+                
                 print("Login successful!")
                 print("Welcome back, " + loggedInUser["username"])
                 self.user_menu.user_menu(loggedInUser)
            else:
-                os.system("clear")
+                
                 print("Login failed. Incorrect username or password!")
                 self.initial_menu()    
         
@@ -58,12 +61,12 @@ class CLIMenu:
 
             createdUser = self.user_manager.save_user_data(username, password)
 
+            clear_screen("Signing up...")
             if createdUser:
-                os.system("clear")
+                
                 print("Sign up successful. Now you can login with your new account!")
                 
             else:
-                os.system("clear")
                 print("Username already taken. Please take another username and try again!")
             self.initial_menu()
         
