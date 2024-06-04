@@ -8,26 +8,26 @@ class OuvidoriaMenu:
     def ouvidoria_menu(self):
         print('''
             ***Ouvidoria***
-            [1] Enviar Reclamação
-            [2] Editar Reclamação
-            [3] Visualizar Reclamação
-            [4] Deletar Reclamação
-            [0] Sair
+            [1] Send Complaint
+            [2] Edit Complaint
+            [3] Visualize Complaints
+            [4] Delete Complaint
+            [0] Exit
             ''')
     def ouvidoria_options(self, logged_in_user):
          self.ouvidoria_menu()
          from cli.user_menu import UserMenu
          self.user_menu = UserMenu()
 
-         escolha = int(input("Digite sua opcao: "))
+         escolha = int(input("Choose one of the options above\n"))
          match escolha:
               case 1: 
-                   reclamacao = input("Digite sua reclamação: ")
+                   reclamacao = input("Type your complaint\n")
                    created_reclamacao = self.user_manager.create_ouvidoria(logged_in_user, reclamacao)
                    if created_reclamacao:
-                        print("Reclamação enviada com sucesso.")
+                        print("Complaint successfully sent!")
                    else:
-                        print("Algo deu errado.")
+                        print("Something went wrong")
                   
               case 2:
                    self.update_ouvidoria(logged_in_user)
@@ -50,7 +50,7 @@ class OuvidoriaMenu:
     def deletar_reclamacao(self, loggedin_user):
          list_reclamacao = self.user_manager.list_ouvidoria(loggedin_user)
          if list_reclamacao:
-               reclamacao_id = input("Please, type the alert you want to delete\n")
+               reclamacao_id = input("Please, type the complaint id you want to delete\n")
                deleted_reclamacao = self.user_manager.delete_ouvidoria(loggedin_user, reclamacao_id)      
                if deleted_reclamacao:
                     os.system("clear")
