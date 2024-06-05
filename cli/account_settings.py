@@ -7,6 +7,7 @@ class UserAccount:
 
     def user_account_menu(self):
         print('''
+              ***Account Settings Menu***
               [1] List all Users
               [2] Change Username
               [3] Change Password
@@ -18,8 +19,13 @@ class UserAccount:
         from cli.user_menu import UserMenu
         self.user_menu = UserMenu()
         self.user_account_menu()
-        option = int(input())
-        
+
+        try:
+            option = int(input("Please choose one of the options above\n"))
+        except ValueError:
+            print("Invalid option. Please try again.")
+            self.change_user_account(option, loggedin_user)
+
         match option:
             case 1:
                 clear_screen("Loading all users...")
@@ -68,7 +74,7 @@ class UserAccount:
                 clear_screen("Coming back to user menu...")
                 self.user_menu.user_menu(loggedin_user)
             case _:
-                print("Invalid option.")
+                print("Invalid option. Please try again.")
                 self.change_user_account(option, loggedin_user)
         
         

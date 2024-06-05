@@ -1,4 +1,3 @@
-import os
 import sys
 from cli.authentication import UserManager
 from utils.clear_screen import clear_screen
@@ -63,7 +62,6 @@ class CLIMenu:
 
             clear_screen("Signing up...")
             if createdUser:
-                
                 print("Sign up successful. Now you can login with your new account!")
                 
             else:
@@ -75,7 +73,7 @@ class CLIMenu:
             sys.exit(0)
             
         else:
-            print("Invalid option")
+            print("Invalid option. Please try again.")
             self.initial_menu()
 
       

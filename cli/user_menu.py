@@ -8,6 +8,7 @@ class UserMenu():
 
     def user_menu(self, loggedin_user):
         print('''
+              ***User Menu***
               [1] Visualize all Alerts
               [2] Create Alerts
               [3] Update Alerts
@@ -18,10 +19,13 @@ class UserMenu():
               ''')
         
         
-        option = int(input('Choose one of the options above\n'))
-        self.user_options(option, loggedin_user)
+        try:
+            option = int(input('Choose one of the options above\n'))
+            self.user_options(option, loggedin_user)
+        except ValueError:
+            print("Invalid option. Please try again.")
+            self.user_menu(loggedin_user)
         
-
     def user_options(self, option, loggedin_user):
         match option:
             case 1:
@@ -85,6 +89,9 @@ class UserMenu():
             case 7:
                 clear_screen("Loggin out...")
                 self.logout()
+            case _:
+                print("Invalid option. Please try again.")
+                self.user_menu(loggedin_user)
     
     def logout(self):
         from cli.menu import CLIMenu

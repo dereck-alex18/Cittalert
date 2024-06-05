@@ -7,33 +7,28 @@ class OuvidoriaMenu:
 
     def ouvidoria_menu(self):
         print('''
-            ***Ouvidoria***
+            ***Ombudsman***
             [1] Send Complaint
             [2] Edit Complaint
             [3] Visualize Complaints
             [4] Delete Complaint
-            [0] Exit
+            [0] Back to User Menu
             ''')
     def ouvidoria_options(self, logged_in_user):
          self.ouvidoria_menu()
          from cli.user_menu import UserMenu
          self.user_menu = UserMenu()
 
-         escolha = int(input("Choose one of the options above\n"))
+         try:
+          escolha = int(input("Choose one of the options above\n"))
+         except ValueError:
+              print("Invalid option. Please try again.")
+              self.ouvidoria_options(logged_in_user)
+
          match escolha:
               case 1: 
-                   reclamacao = input("Type your complaint\n")
-                   created_reclamacao = self.user_manager.create_ouvidoria(logged_in_user, reclamacao)
-                   
-                   clear_screen("Creating new Complaint...")
-
-                   if created_reclamacao:
-                        print("Complaint successfully sent!")
-                   else:
-                        print("Something went wrong")
-                    
-                   self.ouvidoria_options(logged_in_user)
-                  
+                   self.criar_reclamacao(logged_in_user)
+                   self.ouvidoria_options(logged_in_user)  
               case 2:
                    self.update_ouvidoria(logged_in_user)
                    self.ouvidoria_options(logged_in_user)
@@ -46,7 +41,21 @@ class OuvidoriaMenu:
               case 0:
                    clear_screen("Coming back to user menu...")
                    self.user_menu.user_menu(logged_in_user)
+              case _:
+                    print("Invalid option. Please try again.")
+                    self.ouvidoria_options(logged_in_user)
        
+
+    
+    def criar_reclamacao(self, logged_in_user):
+        reclamacao = input("Type your complaint\n")
+        created_reclamacao = self.user_manager.create_ouvidoria(logged_in_user, reclamacao)
+                   
+        clear_screen("Creating new Complaint...")
+        if created_reclamacao:
+          print("Complaint successfully sent!")
+        else:
+          print("Something went wrong")
 
     def visualizar_reclamacoes(self, logged_in_user):
          clear_screen("Loading all complaints...")
